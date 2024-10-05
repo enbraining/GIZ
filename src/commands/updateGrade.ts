@@ -41,18 +41,25 @@ export default {
 
     inputMember.setNickname(`${inputGrade}${inputClass}${inputNumber?.toString().padStart(2, '0')} ${inputName}`)
 
-    const roles = getRole(inputGrade, inputClass)
+    const roleIds = getRole(inputGrade, inputClass)
     const studentRole = await interaction.guild?.roles.fetch(config.studentRoleId)
-    const gradeRole = await interaction.guild?.roles.fetch(roles.thisGrade)
-    const classRole = await interaction.guild?.roles.fetch(roles.thisClass)
+    const gradeRole = await interaction.guild?.roles.fetch(roleIds.thisGrade)
+    const classRole = await interaction.guild?.roles.fetch(roleIds.thisClass)
+
+    const prevRoleIds = inputMember.roles.valueOf().map(prevRole => prevRole.id)
+    const allRoles = [...roles().classes, ...roles().grades].flat();
+    const filteredRoles = prevRoleIds.filter(prevRoleId =>
+        allRoles.includes(prevRoleId) &&
+        prevRoleId != roleIds.thisClass &&
+        prevRoleId != roleIds.thisGrade
+    )
 
     if(gradeRole && classRole && studentRole){
         inputMember.roles.add(studentRole)
         inputMember.roles.add(gradeRole)
         inputMember.roles.add(classRole)
 
-        const excludeRoles = removeRoles([roles.thisGrade, roles.thisClass])
-        excludeRoles.map(async (r) => {
+        filteredRoles.map(async (r) => {
             const excludeRole = await interaction.guild?.roles.fetch(r)
             excludeRole && inputMember.roles.remove(excludeRole)
         })
