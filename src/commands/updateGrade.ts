@@ -48,21 +48,16 @@ export default {
 
     const prevRoleIds = inputMember.roles.valueOf().map(prevRole => prevRole.id)
     const allRoles = [...roles().classes, ...roles().grades].flat();
-    const filteredRoles = prevRoleIds.filter(prevRoleId =>
-        allRoles.includes(prevRoleId) &&
-        prevRoleId != roleIds.thisClass &&
-        prevRoleId != roleIds.thisGrade
-    )
 
     if(gradeRole && classRole && studentRole){
-        inputMember.roles.add(studentRole)
-        inputMember.roles.add(gradeRole)
-        inputMember.roles.add(classRole)
+        const filteredRoleIds = prevRoleIds.filter(prevRoleId =>
+            allRoles.includes(prevRoleId) &&
+            prevRoleId != roleIds.thisClass &&
+            prevRoleId != roleIds.thisGrade
+        )
 
-        filteredRoles.map(async (r) => {
-            const excludeRole = await interaction.guild?.roles.fetch(r)
-            excludeRole && inputMember.roles.remove(excludeRole)
-        })
+        await inputMember.roles.add([studentRole, gradeRole, classRole])
+        await inputMember.roles.remove(filteredRoleIds)
     }
 
     await interaction.reply({
@@ -80,9 +75,4 @@ function getRole(inputGrade: number, inputClass: number) {
         thisGrade,
         thisClass
     }
-}
-
-function removeRoles(excludedRoles: string[]){
-    const allRoles = [...roles().classes, ...roles().grades].flat();
-    return allRoles.filter(role => !excludedRoles.includes(role));
 }
