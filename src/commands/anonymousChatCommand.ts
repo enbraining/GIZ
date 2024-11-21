@@ -5,6 +5,7 @@ import {
   TextChannel,
 } from "discord.js";
 import { Command } from "../interfaces/Command";
+import { saveQuestion } from "../supabase";
 
 export default {
   data: new SlashCommandBuilder()
@@ -32,6 +33,8 @@ export default {
         },
       ],
     });
+
+    saveQuestion(anonymousMessage);
 
     await interaction.reply({
       content:
