@@ -7,6 +7,7 @@ import {
   Routes,
   TextChannel,
 } from "discord.js";
+import anonymousChat from "./commands/anonymousChatCommand";
 import gradeNotice from "./commands/gradeNoticeCommand";
 import updateGrade from "./commands/updateGradeCommand";
 import { Command } from "./interfaces/Command";
@@ -34,7 +35,11 @@ export class GIZ {
     const discordREST = new REST({ version: "10" }).setToken(
       config.discordToken
     );
-    const slashCommands: Array<Command> = [updateGrade, gradeNotice];
+    const slashCommands: Array<Command> = [
+      updateGrade,
+      gradeNotice,
+      anonymousChat,
+    ];
 
     this.slashCommandMap = slashCommands.reduce((map, command) => {
       map.set(command.data.name, command);
@@ -59,7 +64,7 @@ export class GIZ {
         if (!interaction.isChatInputCommand()) return;
         if (interaction.guildId !== guildId) {
           await interaction.reply({
-            content: "GSM 전용 봇 입니다.",
+            content: "GSM 전용 봇 입니다.",
             ephemeral: true,
           });
           return;
