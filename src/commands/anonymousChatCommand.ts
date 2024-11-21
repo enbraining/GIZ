@@ -32,5 +32,11 @@ export default {
         },
       ],
     });
+
+    await interaction.reply({
+      content:
+        "문의가 성공적으로 전송되었습니다. (이 메시지는 본인만 확인할 수 있습니다.)",
+      ephemeral: true,
+    });
   },
 } as Command;

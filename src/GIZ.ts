@@ -102,17 +102,21 @@ export class GIZ {
 
         try {
           await command.execute(interaction);
-          logChannel.send({
-            embeds: [
-              {
-                description: `**Nickname**: ${member.nickname}\n**Command**: /${
-                  interaction.commandName
-                } ${interaction.options.data.map((v) => {
-                  return `\`${v.name}=${v.value}\``;
-                })}\n**Timestamp**: ${interaction.createdAt}`,
-              },
-            ],
-          });
+          if (interaction.commandName !== "anonymous-chat") {
+            logChannel.send({
+              embeds: [
+                {
+                  description: `**Nickname**: ${
+                    member.nickname
+                  }\n**Command**: /${
+                    interaction.commandName
+                  } ${interaction.options.data.map((v) => {
+                    return `\`${v.name}=${v.value}\``;
+                  })}\n**Timestamp**: ${interaction.createdAt}`,
+                },
+              ],
+            });
+          }
         } catch (error: any) {
           console.error(error);
 
