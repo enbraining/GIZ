@@ -25,6 +25,7 @@ export default {
     )) as TextChannel;
 
     const anonymousMessage = interaction.options.getString("message") ?? "";
+    await saveQuestion(anonymousMessage);
     await logChannel.send({
       embeds: [
         {
@@ -33,8 +34,6 @@ export default {
         },
       ],
     });
-
-    saveQuestion(anonymousMessage);
 
     await interaction.reply({
       content:
