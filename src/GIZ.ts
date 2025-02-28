@@ -7,9 +7,8 @@ import {
   Routes,
   TextChannel,
 } from "discord.js";
-import anonymousChat from "./commands/anonymousChatCommand";
-import gradeNotice from "./commands/gradeNoticeCommand";
-import updateGrade from "./commands/updateGradeCommand";
+import GradeNoticeCommand from "./commands/gradeNoticeCommand";
+import UpdateGradeCommand from "./commands/updateGradeCommand";
 import { Command } from "./interfaces/Command";
 import { config } from "./utils/config";
 
@@ -36,9 +35,8 @@ export class GIZ {
       config.discordToken
     );
     const slashCommands: Array<Command> = [
-      updateGrade,
-      gradeNotice,
-      anonymousChat,
+      UpdateGradeCommand,
+      GradeNoticeCommand,
     ];
 
     this.slashCommandMap = slashCommands.reduce((map, command) => {
