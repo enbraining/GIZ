@@ -79,17 +79,6 @@ export class GIZ {
           }
         }
 
-        const userCommands = ["update-grade"];
-        if (userCommands.includes(interaction.commandName)) {
-          if (interaction.memberPermissions?.has("Administrator")) {
-            await interaction.reply({
-              content: "이 명령어는 유저만 사용할 수 있습니다.",
-              ephemeral: true,
-            });
-            return;
-          }
-        }
-
         const command = this.slashCommandMap.get(interaction.commandName);
         if (!command) return;
 
