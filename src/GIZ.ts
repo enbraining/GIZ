@@ -68,6 +68,14 @@ export class GIZ {
           return;
         }
 
+        if (interaction.channelId !== config.commandChannelId) {
+          await interaction.reply({
+            content: "명령어 채널을 이용해주세요.",
+            ephemeral: true,
+          });
+          return;
+        }
+
         const adminCommands = ["grade-notice"];
         if (adminCommands.includes(interaction.commandName)) {
           if (!interaction.memberPermissions?.has("Administrator")) {
