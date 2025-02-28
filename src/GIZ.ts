@@ -135,7 +135,7 @@ export class GIZ {
 
       if (member.guild.id == guildId) {
         member.send(
-          `GSM 서버에 들어오신 것을 환영합니다! 👋🏻\n\`/update-grade\` 명령어를 사용해서 학년 역할을 선택해주세요.\n(물론 GSM 서버 내에서...)`
+          `GSM 디스코드 서버에 들어오신 것을 환영합니다! 👋🏻\n 명령어 채널에서 \`/update-grade\`를 사용해서 역할을 선택해주세요.`
         );
       }
     });
